@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConfigurationSeeder\ConfigurationSeeder.csproj" />
+    <ProjectReference Include="..\UKHO.ADDS.Configuration.Seeder\UKHO.ADDS.Configuration.Seeder.csproj" />
     <ProjectReference Include="..\UKHO.ADDS.Configuration.Domain\UKHO.ADDS.Configuration.Domain.csproj" IsAspireProjectResource="false" />
     <ProjectReference Include="..\UKHO.ADDS.Configuration\UKHO.ADDS.Configuration.csproj" />
   </ItemGroup>

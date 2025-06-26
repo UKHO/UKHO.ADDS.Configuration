@@ -11,7 +11,7 @@
     <InternalsVisibleTo Include="UKHO.ADDS.Configuration" />
     <InternalsVisibleTo Include="UKHO.ADDS.Configuration.Aspire" />
     <InternalsVisibleTo Include="UKHO.ADDS.Configuration.Client" />
-    <InternalsVisibleTo Include="ConfigurationSeeder" />
+    <InternalsVisibleTo Include="UKHO.ADDS.Configuration.Seeder" />
   </ItemGroup>
 
   <ItemGroup>

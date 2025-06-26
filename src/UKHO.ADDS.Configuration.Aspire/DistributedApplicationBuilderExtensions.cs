@@ -32,7 +32,7 @@ namespace UKHO.ADDS.Configuration.Aspire
                 var templateBuilder = new EndpointTemplateBuilder();
 
                 // Only add the seeder service in local development environment
-                seederService = builder.AddProject<ConfigurationSeeder>(WellKnownConfigurationName.ConfigurationSeederName)
+                seederService = builder.AddProject<UKHO_ADDS_Configuration_Seeder>(WellKnownConfigurationName.ConfigurationSeederName)
                     .WithReference(storageTable)
                     .WithEnvironment(x =>
                     {

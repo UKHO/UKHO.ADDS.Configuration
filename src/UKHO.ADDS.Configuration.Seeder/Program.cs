@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using UKHO.ADDS.Configuration.Schema;
 
-namespace ConfigurationSeeder
+namespace UKHO.ADDS.Configuration.Seeder
 {
     internal class Program
     {
