@@ -21,6 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{4E0843A4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UKHO.ADDS.Configuration.Seeder", "src\UKHO.ADDS.Configuration.Seeder\UKHO.ADDS.Configuration.Seeder.csproj", "{66E96A1B-8874-B021-1A37-C3DDF28282AA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "@protocol", "@protocol", "{766CBAF8-E587-4376-B426-262052687334}"
+	ProjectSection(SolutionItems) = preProject
+		protocol\configuration.proto = protocol\configuration.proto
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
