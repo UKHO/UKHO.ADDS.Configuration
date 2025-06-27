@@ -34,6 +34,7 @@ namespace UKHO.ADDS.Configuration.Aspire
                 // Only add the seeder service in local development environment
                 seederService = builder.AddProject<UKHO_ADDS_Configuration_Seeder>(WellKnownConfigurationName.ConfigurationSeederName)
                     .WithReference(storageTable)
+                    .WaitFor(storageTable)
                     .WithEnvironment(x =>
                     {
                         x.EnvironmentVariables.Add(WellKnownConfigurationName.ConfigurationFilePath, configFilePath);
@@ -63,10 +64,6 @@ namespace UKHO.ADDS.Configuration.Aspire
 
                         var resultJson = template(context);
                         File.WriteAllText(configFilePath, resultJson);
-
-                        //var fssBuilderEndpoint = new UriBuilder(addsMockEndpoint.Url) { Host = "host.docker.internal", Path = "fss/" };
-                        //var fssOrchestratorEndpoint = new UriBuilder(addsMockEndpoint.Url) { Host = addsMockEndpoint.Host, Path = "fss/" };
-                        //var scsEndpoint = new UriBuilder(addsMockEndpoint.Url) { Host = addsMockEndpoint.Host, Path = "scs/" };
                     });
             }
 
