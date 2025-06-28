@@ -8,7 +8,7 @@
 
         public const string ConfigurationServiceName = "adds-configuration";
 
-        public const string ConfigurationSeederName = "adds-configuration-seeder";
+        public const string ConfigurationSeederName = "adds-local-configuration-seeder";
 
         public const string ConfigurationServiceKeyVaultName = "adds-configuration-kv";
 
