@@ -13,16 +13,16 @@ namespace UKHO.ADDS.Configuration.Aspire
 {
     public static class DistributedApplicationBuilderExtensions
     {
-        public static IResourceBuilder<ProjectResource> AddConfiguration(this IDistributedApplicationBuilder builder, string configJsonPath, Action<EndpointTemplateBuilder> templateCallback, string? tagHiddenTitle = null)
+        public static IResourceBuilder<ProjectResource> AddConfiguration(this IDistributedApplicationBuilder builder, string configJsonPath, Action<EndpointTemplateBuilder> templateCallback, string? serviceNameTag = null)
         {
             var storage = builder.AddAzureStorage(WellKnownConfigurationName.ConfigurationServiceStorageName).RunAsEmulator(e => { e.WithDataVolume(); });
             storage.ConfigureInfrastructure(config =>
             {
                 var storageAccount = config.GetProvisionableResources().OfType<StorageAccount>().Single();
 
-                if (!string.IsNullOrWhiteSpace(tagHiddenTitle))
+                if (!string.IsNullOrWhiteSpace(serviceNameTag))
                 {
-                    storageAccount.Tags.Add("hidden-title", tagHiddenTitle);
+                    storageAccount.Tags.Add("hidden-title", serviceNameTag);
                 }
 
                 storageAccount.AllowSharedKeyAccess = true;
@@ -31,12 +31,12 @@ namespace UKHO.ADDS.Configuration.Aspire
             var storageTable = storage.AddTables(WellKnownConfigurationName.ConfigurationServiceTableStorageName);
             var keyVault = builder.AddAzureKeyVaultEmulator(WellKnownConfigurationName.ConfigurationServiceKeyVaultName, new KeyVaultEmulatorOptions { Persist = false });
 
-            if (!string.IsNullOrWhiteSpace(tagHiddenTitle))
+            if (!string.IsNullOrWhiteSpace(serviceNameTag))
             {
                 keyVault.ConfigureInfrastructure(config =>
                 {
                     var keyVaultService = config.GetProvisionableResources().OfType<KeyVaultService>().Single();
-                    keyVaultService.Tags.Add("hidden-title", tagHiddenTitle);
+                    keyVaultService.Tags.Add("hidden-title", serviceNameTag);
                 });
             }
 
