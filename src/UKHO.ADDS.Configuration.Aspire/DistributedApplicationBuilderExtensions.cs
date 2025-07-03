@@ -1,5 +1,7 @@
 ﻿using System.Dynamic;
 using System.Text;
+using Azure.Provisioning.KeyVault;
+using Azure.Provisioning.Storage;
 using AzureKeyVaultEmulator.Aspire.Hosting;
 using HandlebarsDotNet;
 using Microsoft.Extensions.Hosting;
@@ -11,12 +13,32 @@ namespace UKHO.ADDS.Configuration.Aspire
 {
     public static class DistributedApplicationBuilderExtensions
     {
-        public static IResourceBuilder<ProjectResource> AddConfiguration(this IDistributedApplicationBuilder builder, string configJsonPath, Action<EndpointTemplateBuilder> templateCallback)
+        public static IResourceBuilder<ProjectResource> AddConfiguration(this IDistributedApplicationBuilder builder, string configJsonPath, Action<EndpointTemplateBuilder> templateCallback, string? tagHiddenTitle = null)
         {
             var storage = builder.AddAzureStorage(WellKnownConfigurationName.ConfigurationServiceStorageName).RunAsEmulator(e => { e.WithDataVolume(); });
+            storage.ConfigureInfrastructure(config =>
+            {
+                var storageAccount = config.GetProvisionableResources().OfType<StorageAccount>().Single();
+
+                if (!string.IsNullOrWhiteSpace(tagHiddenTitle))
+                {
+                    storageAccount.Tags.Add("hidden-title", tagHiddenTitle);
+                }
+
+                storageAccount.AllowSharedKeyAccess = true;
+            });
 
             var storageTable = storage.AddTables(WellKnownConfigurationName.ConfigurationServiceTableStorageName);
             var keyVault = builder.AddAzureKeyVaultEmulator(WellKnownConfigurationName.ConfigurationServiceKeyVaultName, new KeyVaultEmulatorOptions { Persist = false });
+
+            if (!string.IsNullOrWhiteSpace(tagHiddenTitle))
+            {
+                keyVault.ConfigureInfrastructure(config =>
+                {
+                    var keyVaultService = config.GetProvisionableResources().OfType<KeyVaultService>().Single();
+                    keyVaultService.Tags.Add("hidden-title", tagHiddenTitle);
+                });
+            }
 
             var configOriginalPath = Path.GetFullPath(configJsonPath);
             var configFilePath = CopyToTempFile(configOriginalPath);
@@ -76,7 +98,6 @@ namespace UKHO.ADDS.Configuration.Aspire
                 .WaitFor(keyVault)
                 .WithScalar("API Browser")
                 .WithDashboard("Configuration Dashboard")
-                
                 .WithEnvironment(WellKnownConfigurationName.AddsEnvironmentName, AddsEnvironment.Local.Value);
 
             if (seederService != null)
