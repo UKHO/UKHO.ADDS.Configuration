@@ -1,4 +1,5 @@
 ﻿using Azure.Data.Tables;
+using UKHO.ADDS.Configuration.Extensions;
 
 namespace UKHO.ADDS.Configuration.Schema
 {
@@ -10,7 +11,7 @@ namespace UKHO.ADDS.Configuration.Schema
 
         public async Task WriteConfigurationAsync(AddsEnvironment env, string json)
         {
-            var allEnvironments = ConfigurationParser.Parse(json);
+            var allEnvironments = ConfigurationParser.Parse(json.StripJsonComments());
 
             var targetEnv = allEnvironments.FirstOrDefault(e => e.Environment == env);
 
