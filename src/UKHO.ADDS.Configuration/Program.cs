@@ -40,7 +40,8 @@ namespace UKHO.ADDS.Configuration
                 });
             }
 
-            builder.Services.AddGrpc();
+            // TODO Reinstate when reverting to gRPC
+            //builder.Services.AddGrpc();
 
             builder.Services.AddSingleton<ConfigurationStore>();
             builder.Services.AddSingleton<ConfigurationWriter>();
@@ -91,14 +92,15 @@ namespace UKHO.ADDS.Configuration
             })
             .WithName("GetConfiguration");
 
-            app.MapWhen(context => context.Request.ContentType?.StartsWith("application/grpc") == true, grpcApp =>
-            {
-                grpcApp.UseRouting();
-                grpcApp.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapGrpcService<ConfigurationService>();
-                });
-            });
+            // TODO Reinstate when reverting to gRPC
+            //app.MapWhen(context => context.Request.ContentType?.StartsWith("application/grpc") == true, grpcApp =>
+            //{
+            //    grpcApp.UseRouting();
+            //    grpcApp.UseEndpoints(endpoints =>
+            //    {
+            //        endpoints.MapGrpcService<ConfigurationService>();
+            //    });
+            //});
 
             //app.MapGrpcService<ConfigurationService>();
 

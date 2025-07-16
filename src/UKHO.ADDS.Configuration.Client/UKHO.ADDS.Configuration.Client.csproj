@@ -15,6 +15,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6" />
+    <PackageReference Include="UKHO.ADDS.Infrastructure.Serialization" Version="0.0.50326-alpha.1" />
   </ItemGroup>
 
   <ItemGroup>
