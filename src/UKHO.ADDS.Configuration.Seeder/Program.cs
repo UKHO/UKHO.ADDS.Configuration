@@ -25,6 +25,14 @@ namespace UKHO.ADDS.Configuration.Seeder
             }
             else
             {
+                var token = Environment.GetEnvironmentVariable("idToken");
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    Console.WriteLine("ID Token is not set in the environment variables.");
+                    return 8;
+                }
+
                 var environmentName = args[0];
                 var environment = AddsEnvironment.Parse(environmentName);
 
