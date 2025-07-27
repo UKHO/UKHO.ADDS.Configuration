@@ -4,8 +4,8 @@
     {
         public static readonly AddsEnvironment Local = new("local");
         public static readonly AddsEnvironment Development = new("dev");
-        public static readonly AddsEnvironment VNextIat = new("vnext-iat");
-        public static readonly AddsEnvironment VNextE2E = new("vnext-e2e");
+        public static readonly AddsEnvironment VNextIat = new("vni");
+        public static readonly AddsEnvironment VNextE2E = new("vne");
         public static readonly AddsEnvironment Iat = new("iat");
         public static readonly AddsEnvironment PreProd = new("preprod");
         public static readonly AddsEnvironment Live = new("live");
