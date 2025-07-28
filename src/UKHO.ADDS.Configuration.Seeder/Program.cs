@@ -17,7 +17,7 @@ namespace UKHO.ADDS.Configuration.Seeder
 
                 builder.AddAzureTableClient(WellKnownConfigurationName.ConfigurationServiceTableStorageName);
                 builder.Services.AddSingleton<ConfigurationWriter>();
-                builder.Services.AddHostedService(x => new LocalSeederService(x.GetRequiredService<IHostApplicationLifetime>(),x.GetRequiredService<ConfigurationWriter>(), configFilePath));
+                builder.Services.AddHostedService(x => new LocalSeederService(x.GetRequiredService<IHostApplicationLifetime>(), x.GetRequiredService<ConfigurationWriter>(), configFilePath));
 
                 var app = builder.Build();
 
@@ -25,22 +25,47 @@ namespace UKHO.ADDS.Configuration.Seeder
             }
             else
             {
-                var token = Environment.GetEnvironmentVariable("idToken");
-
-                if (string.IsNullOrEmpty(token))
+                if (args.Length != 3)
                 {
-                    Console.WriteLine("ID Token is not set in the environment variables.");
-                    return 8;
+                    Console.WriteLine("Usage: <environment> <configFilePath> <tableUri>");
+                    return 4;
                 }
 
+                var idToken = Environment.GetEnvironmentVariable("idToken");
+
+                if (string.IsNullOrEmpty(idToken))
+                {
+                    Console.WriteLine("ID Token is not set in the environment variables.");
+                    return 4;
+                }
+
+                var credential = new IdTokenCredential(idToken);
+
                 var environmentName = args[0];
+                Console.WriteLine($"Seeding configuration for environment: {environmentName}");
                 var environment = AddsEnvironment.Parse(environmentName);
 
-                var configFilePath = args[1]; 
+                var configFilePath = args[1];
+
+                if (!File.Exists(configFilePath))
+                {
+                    Console.WriteLine($"Configuration file not found: {configFilePath}");
+                    return 4;
+                }
+
+                Console.WriteLine($"Reading configuration from: {configFilePath}");
                 var configJson = await File.ReadAllTextAsync(configFilePath);
 
-                var connectionString = args[2];
-                var tableServiceClient = new TableServiceClient(connectionString);
+                var tableUri = args[2];
+
+                if (!Uri.TryCreate(tableUri, UriKind.Absolute, out var uri))
+                {
+                    Console.WriteLine($"Invalid Table Storage URI: {tableUri}");
+                    return 4;
+                }
+
+                Console.WriteLine($"Using Table Storage URI: {tableUri}");
+                var tableServiceClient = new TableServiceClient(new Uri(tableUri), credential);
                 var configurationWriter = new ConfigurationWriter(tableServiceClient);
 
                 await configurationWriter.WriteConfigurationAsync(environment, configJson);
