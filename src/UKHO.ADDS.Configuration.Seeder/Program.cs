@@ -1,4 +1,5 @@
 ﻿using Azure.Data.Tables;
+using Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using UKHO.ADDS.Configuration.Schema;
@@ -39,7 +40,7 @@ namespace UKHO.ADDS.Configuration.Seeder
                     return 4;
                 }
 
-                var credential = new IdTokenCredential(idToken);
+                //var credential = new IdTokenCredential(idToken);
 
                 var environmentName = args[0];
                 Console.WriteLine($"Seeding configuration for environment: {environmentName}");
@@ -65,6 +66,7 @@ namespace UKHO.ADDS.Configuration.Seeder
                 }
 
                 Console.WriteLine($"Using Table Storage URI: {tableUri}");
+                var credential = new DefaultAzureCredential();
                 var tableServiceClient = new TableServiceClient(new Uri(tableUri), credential);
                 var configurationWriter = new ConfigurationWriter(tableServiceClient);
 
