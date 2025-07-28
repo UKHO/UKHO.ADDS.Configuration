@@ -56,7 +56,7 @@ namespace UKHO.ADDS.Configuration.Seeder
                 }
 
                 Console.WriteLine($"Using Table Storage URI: {uri}");
-                //var credential = new DefaultAzureCredential();
+
                 var credential = new AzureCliCredential();
                 var tableServiceClient = new TableServiceClient(uri, credential);
                 var configurationWriter = new ConfigurationWriter(tableServiceClient);
