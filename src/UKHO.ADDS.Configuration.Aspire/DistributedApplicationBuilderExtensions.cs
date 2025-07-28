@@ -16,17 +16,15 @@ namespace UKHO.ADDS.Configuration.Aspire
         public static IResourceBuilder<ProjectResource> AddConfiguration(this IDistributedApplicationBuilder builder, string configJsonPath, Action<EndpointTemplateBuilder> templateCallback, string? serviceNameTag = null)
         {
             var storage = builder.AddAzureStorage(WellKnownConfigurationName.ConfigurationServiceStorageName).RunAsEmulator(e => { e.WithDataVolume(); });
-            storage.ConfigureInfrastructure(config =>
+
+            if (!string.IsNullOrWhiteSpace(serviceNameTag))
             {
-                var storageAccount = config.GetProvisionableResources().OfType<StorageAccount>().Single();
-
-                if (!string.IsNullOrWhiteSpace(serviceNameTag))
+                storage.ConfigureInfrastructure(config =>
                 {
+                    var storageAccount = config.GetProvisionableResources().OfType<StorageAccount>().Single();
                     storageAccount.Tags.Add("hidden-title", serviceNameTag);
-                }
-
-                storageAccount.AllowSharedKeyAccess = true;
-            });
+                });
+            }
 
             var storageTable = storage.AddTables(WellKnownConfigurationName.ConfigurationServiceTableStorageName);
             var keyVault = builder.AddAzureKeyVaultEmulator(WellKnownConfigurationName.ConfigurationServiceKeyVaultName, new KeyVaultEmulatorOptions { Persist = false });
