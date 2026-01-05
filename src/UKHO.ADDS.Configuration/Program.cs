@@ -21,7 +21,7 @@ namespace UKHO.ADDS.Configuration
 
             builder.Services.AddOpenApi();
 
-            builder.AddAzureTableClient(WellKnownConfigurationName.ConfigurationServiceTableStorageName);
+            builder.AddAzureTableServiceClient(WellKnownConfigurationName.ConfigurationServiceTableStorageName);
 
             var vaultEndpoint = builder.Configuration.GetConnectionString(WellKnownConfigurationName.ConfigurationServiceKeyVaultName) ?? string.Empty;
 

@@ -16,7 +16,7 @@ namespace UKHO.ADDS.Configuration.Seeder
 
                 var configFilePath = builder.Configuration[WellKnownConfigurationName.ConfigurationFilePath]!;
 
-                builder.AddAzureTableClient(WellKnownConfigurationName.ConfigurationServiceTableStorageName);
+                builder.AddAzureTableServiceClient(WellKnownConfigurationName.ConfigurationServiceTableStorageName);
                 builder.Services.AddSingleton<ConfigurationWriter>();
                 builder.Services.AddHostedService(x => new LocalSeederService(x.GetRequiredService<IHostApplicationLifetime>(), x.GetRequiredService<ConfigurationWriter>(), configFilePath));
 
