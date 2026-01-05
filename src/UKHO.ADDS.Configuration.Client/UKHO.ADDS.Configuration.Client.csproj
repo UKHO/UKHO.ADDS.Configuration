@@ -7,15 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.31.1" />
-    <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
-    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.71.0" />
-    <PackageReference Include="Grpc.Tools" Version="2.72.0">
+    <PackageReference Include="Google.Protobuf" Version="3.33.2" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.76.0" />
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.76.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.76.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6" />
-    <PackageReference Include="UKHO.ADDS.Infrastructure.Serialization" Version="0.0.50326-alpha.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.11" />
+    <PackageReference Include="UKHO.ADDS.Infrastructure.Serialization" Version="0.0.50327-alpha.2" />
   </ItemGroup>
 
   <ItemGroup>
