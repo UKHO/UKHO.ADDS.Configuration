@@ -15,11 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Azure.Data.Tables" Version="13.1.0" />
-    <PackageReference Include="Aspire.Azure.Storage.Queues" Version="13.1.0" />
-    <PackageReference Include="Aspire.Azure.Storage.Blobs" Version="13.1.0" />
-    <PackageReference Include="AzureKeyVaultEmulator.Client" Version="2.8.3" />
-  <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.15.0" />
+    <PackageReference Include="Aspire.Azure.Data.Tables" Version="13.2.1" />
+    <PackageReference Include="Aspire.Azure.Storage.Queues" Version="13.2.1" />
+    <PackageReference Include="Aspire.Azure.Storage.Blobs" Version="13.2.1" />
+    <PackageReference Include="AzureKeyVaultEmulator.Client" Version="2.9.0" />
+  <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.15.1" />
 
   </ItemGroup>
 
